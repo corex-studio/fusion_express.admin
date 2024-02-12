@@ -1,0 +1,73 @@
+@import 'font';
+@import 'colors';
+@import 'spacing';
+
+.rounded-10 {
+  border-radius: 10px;
+}
+
+.q-field--auto-height.q-field--labeled .q-field__control-container {
+  padding-top: unset !important;
+}
+
+.q-field--auto-height .q-field__control,
+.q-field--auto-height .q-field__native {
+  min-height: unset !important;
+  height: 100%;
+}
+
+.q-header .q-field__label {
+  top: 10px;
+  font-size: 12px;
+}
+
+.q-field--auto-height.q-field--labeled .q-field__control-container {
+  padding-top: unset !important;
+}
+
+.q-header .q-field--labeled .q-field__native,
+.q-header .q-field--labeled .q-field__prefix,
+.q-header .q-field--labeled .q-field__suffix {
+  line-height: 24px;
+  padding-top: 13px;
+  padding-bottom: 5px;
+}
+
+.q-field--labeled .q-field__native,
+.q-field--labeled .q-field__prefix,
+.q-field--labeled .q-field__suffix {
+  line-height: 24px;
+  padding-top: 6px !important;
+  padding-bottom: 8px;
+}
+
+textarea.q-field__native {
+  resize: vertical;
+  padding-top: 10px !important;
+  padding-left: 9px !important;
+  min-height: 52px;
+}
+
+.q-field {
+  .q-field__control {
+    height: inherit !important;
+    padding: 0 12px;
+  }
+}
+.q-field--outlined .q-field__control:before,
+.q-editor {
+  border: 1px solid $gray-light;
+}
+
+.q-field__inner {
+  height: inherit;
+}
+
+.q-field__bottom {
+  padding: 3px 0 0 0 !important;
+}
+
+.q-field__append {
+  height: inherit;
+  cursor: pointer;
+}

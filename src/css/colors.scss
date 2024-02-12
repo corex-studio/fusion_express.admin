@@ -1,0 +1,43 @@
+$colors: (
+  'black': #1f1f22,
+  'secondary': #5d6174,
+  'secondary1': #eaeaea,
+  'primary': #45464e,
+  'accent': #f89d9d,
+  'transparent': #00000000,
+  'white': #fff,
+  'deviated': #ff2b3f,
+  'success': #1ac30b,
+  'danger': #ff3b10,
+  'liner2': linear-gradient(0.79deg, #0c3635 0.65%, #1e7b79 99.32%),
+  'orange': #fa8835,
+  'green': #54cc49,
+  'gray-dark': #888888,
+  'gray-light': #ededed,
+  'red': #e64840,
+  'yellow': #ffc85c,
+);
+
+@each $index, $color in $colors {
+  .bg-#{$index} {
+    background: $color !important;
+  }
+
+  .text-#{$index} {
+    color: $color !important;
+
+    &.q-select .q-field__native span {
+      color: $color !important;
+    }
+  }
+
+  .q-btn.underline.text-#{$index}:after,
+  .q-btn.underline-fixed.text-#{$index}:after {
+    background: $color !important;
+  }
+
+  .bg-#{$index} .q-field__label {
+    background: $color !important;
+    border-radius: 4px;
+  }
+}

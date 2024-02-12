@@ -1,0 +1,93 @@
+* {
+  font-family: 'Rubik', sans-serif;
+}
+
+.bold {
+  font-weight: 600 !important;
+  .q-field__label {
+    @extend .bold;
+  }
+  &.q-btn div {
+    @extend .bold;
+  }
+}
+
+.mega-header {
+  font-weight: 400;
+  font-size: 54px;
+  line-height: 59px;
+}
+
+.mega-header2 {
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 33px;
+}
+
+.big-header {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 41px;
+}
+
+.header {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 33px;
+}
+
+.header2 {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.subtitle-text {
+  font-size: 16px;
+  line-height: 23px;
+}
+
+.body {
+  font-size: 14px;
+  line-height: 20px;
+
+  .q-field__label,
+  &.q-btn div {
+    @extend .body;
+  }
+}
+
+.secondary-text {
+  font-size: 13px;
+  line-height: 17px;
+
+  .q-field__label,
+  .q-field__native,
+  textarea::placeholder {
+    @extend .secondary-text;
+  }
+}
+
+@mixin placeholder {
+  ::-webkit-input-placeholder {
+    @content;
+  }
+
+  :-moz-placeholder {
+    @content;
+  }
+
+  ::-moz-placeholder {
+    @content;
+  }
+
+  :-ms-input-placeholder {
+    @content;
+  }
+}
+
+.notification-text {
+  .q-btn {
+    @extend .body;
+  }
+}
