@@ -8,9 +8,9 @@ export enum ScheduleType {
 }
 
 export const scheduleTypeNames = {
-  [ScheduleType.DAY]: 'День',
-  [ScheduleType.MINUTE]: 'Минута',
-  [ScheduleType.HOUR]: 'Час',
+  [ScheduleType.DAY]: 'В днях',
+  [ScheduleType.MINUTE]: 'В минутах',
+  [ScheduleType.HOUR]: 'В часах',
 };
 
 export const scheduleTypes = Object.keys(scheduleTypeNames).map((el) => {
