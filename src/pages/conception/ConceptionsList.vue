@@ -1,6 +1,13 @@
 <template>
   <div>
-    <div class="full-width big-header bold">Концепции</div>
+    <div class="full-width row justify-between">
+      <div class="big-header bold">Концепции</div>
+      <CButton
+        @click="loadConceptions()"
+        :loading="loading"
+        label="Загрузить концепции"
+      />
+    </div>
     <div class="column full-width mt-13">
       <template v-if="$conception.items.length">
         <div
@@ -56,9 +63,31 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { Notify } from 'quasar';
+import CButton from 'src/components/templates/buttons/CButton.vue';
 import Pagination from 'src/components/templates/inputs/Pagination.vue';
 import { conceptionRepo } from 'src/models/conception/conceptionRepo';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+
+const loading = ref(false);
+
+const loadConceptions = async () => {
+  try {
+    loading.value = true;
+    await conceptionRepo.loadConceptions();
+    Notify.create({
+      message: 'Концепции успешно загружены',
+    });
+    await loadItems();
+  } catch {
+    Notify.create({
+      message: 'Ошибка при загрузке концепций',
+      color: 'danger',
+    });
+  } finally {
+    loading.value = false;
+  }
+};
 
 const loadItems = async (page = 1, appendItems = false) => {
   await conceptionRepo.list(
