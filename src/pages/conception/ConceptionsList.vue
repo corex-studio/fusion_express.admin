@@ -13,12 +13,13 @@
         <div
           class="row full-width px-7 py-5 bg-secondary1 rounded-10 bold mb-5"
         >
-          <div class="col-3">Название</div>
+          <div class="col-2">Название</div>
           <div class="col-2">Название юр. лица</div>
           <div class="col-2">ИНН</div>
           <div class="col-2">КПП</div>
           <div class="col-2">БИК</div>
           <div class="col-1 row justify-center">Статус</div>
+          <div class="col-1 row justify-center">Активность</div>
         </div>
         <template v-for="(el, index) in $conception.items" :key="index">
           <q-separator v-if="index" />
@@ -31,9 +32,9 @@
                 },
               })
             "
-            class="row full-width px-7 py-5 cursor-pointer item-row"
+            class="row full-width px-7 py-4 items-center cursor-pointer item-row"
           >
-            <div class="col-3 ellipsis">{{ el.name || '-' }}</div>
+            <div class="col-2 ellipsis">{{ el.name || '-' }}</div>
             <div class="col-2 ellipsis pr-5">{{ el.legalName || '-' }}</div>
             <div class="col-2 ellipsis pr-5">{{ el.inn || '-' }}</div>
             <div class="col-2 ellipsis pr-5">{{ el.kpp || '-' }}</div>
@@ -41,10 +42,20 @@
             <div class="col-1 row justify-center">
               <q-icon
                 size="18px"
-                :color="el.checkAccount ? 'success' : 'danger'"
+                :color="el.isConfigured ? 'success' : 'danger'"
                 :name="
-                  el.checkAccount ? 'fa-solid fa-check' : 'fa-solid fa-xmark'
+                  el.isConfigured ? 'fa-solid fa-check' : 'fa-solid fa-xmark'
                 "
+              />
+            </div>
+            <div class="col-1 row justify-center">
+              <CIconButton
+                @click.capture.stop="conceptionActiveClickHandler(el)"
+                :icon="el.active ? 'fa-solid fa-check' : 'fa-solid fa-xmark'"
+                :icon-color="el.active ? 'success' : 'danger'"
+                color="secondary1"
+                size="34px"
+                :loading="$conception.loadings.update"
               />
             </div>
           </div>
@@ -65,11 +76,25 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar';
 import CButton from 'src/components/templates/buttons/CButton.vue';
+import CIconButton from 'src/components/templates/buttons/CIconButton.vue';
 import Pagination from 'src/components/templates/inputs/Pagination.vue';
 import { conceptionRepo } from 'src/models/conception/conceptionRepo';
+import { Conception } from 'src/models/conception/conception';
 import { onMounted, ref } from 'vue';
 
 const loading = ref(false);
+
+const conceptionActiveClickHandler = async (item: Conception) => {
+  try {
+    item.active = !item.active;
+    await conceptionRepo.update(item);
+  } catch {
+    Notify.create({
+      message: 'Ошибка при изменении активности концепции',
+      color: 'danger',
+    });
+  }
+};
 
 const loadConceptions = async () => {
   try {

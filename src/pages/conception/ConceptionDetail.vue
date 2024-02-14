@@ -16,12 +16,15 @@
         <div class="column gap-2">
           <div class="header bold row items-center gap-5">
             Концепция: {{ $conception.item?.name || 'Без названия' }}
+          </div>
+          <div class="text-secondary row gap-3">
+            Статус:
             <q-icon
               class="mb-1"
-              size="24px"
-              :color="$conception.item?.checkAccount ? 'success' : 'danger'"
+              size="20px"
+              :color="$conception.item?.isConfigured ? 'success' : 'danger'"
               :name="
-                $conception.item?.checkAccount
+                $conception.item?.isConfigured
                   ? 'fa-solid fa-check'
                   : 'fa-solid fa-xmark'
               "
@@ -45,6 +48,7 @@
       />
     </div>
     <div style="max-width: 700px" class="column full-width gap-10 mt-13">
+      <q-checkbox dense v-model="item.active" label="Активность" />
       <CInput default v-model="item.legalName" label="Название юр. лица" />
       <CInput default v-model="item.inn" label="ИНН" />
       <CInput default v-model="item.kpp" label="КПП" />

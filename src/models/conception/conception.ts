@@ -7,6 +7,7 @@ export type ConceptionRaw = {
   external_id?: string | null;
   created_at?: string | null;
   updated_at?: string | null;
+  active?: boolean;
   account?: string | null;
   bank_1?: string | null;
   bank_2?: string | null;
@@ -28,6 +29,7 @@ export class Conception implements BaseModel {
   account: string | null;
   bank1: string | null;
   bank2: string | null;
+  active: boolean;
   bik: string | null;
   checkAccount: string | null;
   corrAccount: string | null;
@@ -45,7 +47,7 @@ export class Conception implements BaseModel {
     this.updatedAt = raw.updated_at
       ? moment.utc(raw.updated_at).local().format('DD.MM.YYYY HH:mm')
       : null;
-
+    this.active = raw.active || false;
     this.account = raw.account || null;
     this.bank1 = raw.bank_1 || null;
     this.bank2 = raw.bank_2 || null;
@@ -72,6 +74,7 @@ export class Conception implements BaseModel {
       legal_name: this.legalName,
       external_id: this.externalId,
       name: this.name,
+      active: this.active,
     };
   }
 }
