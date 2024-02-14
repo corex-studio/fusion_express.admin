@@ -68,7 +68,7 @@ const tabs = computed(() => {
         String(route.name)
       ),
       route: 'conceptionsList',
-      icon: 'fa-solid fa-block-quote',
+      icon: 'fa-regular fa-block-quote',
     },
     {
       label: 'Расписание',
@@ -79,7 +79,7 @@ const tabs = computed(() => {
       },
       selected: ['schedulePage'].includes(String(route.name)),
       route: 'schedulesList',
-      icon: 'fa-solid fa-calendar-days',
+      icon: 'fa-regular fa-calendar-days',
     },
     {
       label: 'Накладные',
@@ -90,7 +90,18 @@ const tabs = computed(() => {
       },
       selected: ['waybillsList'].includes(String(route.name)),
       route: 'waybillsList',
-      icon: 'fa-solid fa-files',
+      icon: 'fa-regular fa-files',
+    },
+    {
+      label: 'Склады',
+      click: () => {
+        void router.push({
+          name: 'warehousesList',
+        });
+      },
+      selected: ['warehousesList'].includes(String(route.name)),
+      route: 'warehousesList',
+      icon: 'fa-regular fa-shelves',
     },
   ];
 });

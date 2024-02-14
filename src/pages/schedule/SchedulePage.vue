@@ -10,6 +10,7 @@
           Следующая отправка: {{ item.next_send || '-' }}
         </div>
       </div>
+      <q-checkbox v-model="item.active" dense label="Активность" />
       <CSelect
         external-label="Тип"
         :model-value="scheduleTypeNames[item.type]"
@@ -17,6 +18,7 @@
         :items="scheduleTypes"
         default
       />
+
       <CInput default v-model="item.interval" type="number" label="Интервал" />
       <div class="row full-width justify-center mt-10">
         <CButton
@@ -58,7 +60,8 @@ const isSaveAvailable = computed(() => {
 const save = async () => {
   try {
     loading.value = true;
-    await waybillRepo.setSchedule(item.value);
+    const res = await waybillRepo.setSchedule(item.value);
+    item.value = cloneDeep(res);
     Notify.create({
       message: 'Расписание успешно обновлено',
     });

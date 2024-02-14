@@ -20,9 +20,15 @@ export class WaybillRepo extends BaseRepo<Waybill> {
     return await this.api.send({
       method: 'POST',
       action: 'set_schedule',
-      data: {
-        data,
-      },
+      data: data || {},
+    });
+  }
+
+  async process(data: Record<string, any>) {
+    return await this.api.send({
+      method: 'POST',
+      action: 'process',
+      data: data || {},
     });
   }
 }

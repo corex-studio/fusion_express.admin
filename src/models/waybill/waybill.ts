@@ -1,5 +1,7 @@
 import moment from 'moment';
 import { BaseModel } from 'src/corexModels/apiModels/baseModel';
+import { Conception, ConceptionRaw } from '../conception/conception';
+import { Warehouse, WarehouseRaw } from '../warehouse/warehouse';
 
 export enum ScheduleType {
   DAY = 'day',
@@ -29,6 +31,7 @@ export type WaybillSchedule = {
   interval: number | null;
   created_at: string | null;
   updated_at: string | null;
+  active: boolean;
 };
 
 export enum WaybillType {
@@ -70,6 +73,8 @@ export type WaybillRaw = {
   number?: string | null;
   document_date?: string | null;
   status?: WaybillType;
+  warehouse?: WarehouseRaw | null;
+  conception?: ConceptionRaw | null;
   created_at?: string | null;
   updated_at?: string | null;
 };
@@ -79,6 +84,8 @@ export class Waybill implements BaseModel {
   number: string | null;
   documentDate: string | null;
   status: WaybillType;
+  warehouse: Warehouse | null;
+  conception: Conception | null;
   createdAt: string | null;
   updatedAt: string | null;
   constructor(raw: WaybillRaw) {
@@ -88,6 +95,8 @@ export class Waybill implements BaseModel {
       ? moment.utc(raw.document_date).local().format('DD.MM.YYYY HH:mm')
       : null;
     this.status = raw.status || WaybillType.CREATED;
+    this.warehouse = raw.warehouse ? new Warehouse(raw.warehouse) : null;
+    this.conception = raw.conception ? new Conception(raw.conception) : null;
     this.createdAt = raw.created_at
       ? moment.utc(raw.created_at).local().format('DD.MM.YYYY HH:mm')
       : null;

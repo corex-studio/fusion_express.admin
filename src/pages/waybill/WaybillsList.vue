@@ -1,26 +1,37 @@
 <template>
   <div>
-    <div class="full-width big-header bold">Накладные</div>
+    <div class="row full-width justify-between items-center">
+      <div class="big-header bold">Накладные</div>
+      <CButton
+        @click="loadModal = true"
+        label="Загрузить накладные"
+        width="180px"
+      />
+    </div>
     <div class="column full-width mt-13">
       <template v-if="$waybill.items.length">
         <div
           class="row full-width px-7 py-5 bg-secondary1 rounded-10 bold mb-5"
         >
           <div class="col-1">Номер</div>
-          <div class="col-3">Дата документа</div>
-          <div class="col-3">Дата создания</div>
-          <div class="col-3">Дата обновления</div>
-          <div class="col-2">Статус</div>
+          <div class="col-2">Концепция</div>
+          <div class="col-2">Склад</div>
+          <div class="col-2">Дата документа</div>
+          <div class="col-2">Дата создания</div>
+          <div class="col-2">Дата обновления</div>
+          <div class="col-1">Статус</div>
         </div>
         <template v-for="(el, index) in $waybill.items" :key="index">
           <q-separator v-if="index" />
           <div class="row full-width px-7 py-5 item-row">
             <div class="col-1">{{ el.number }}</div>
+            <div class="col-2">{{ el.conception?.name || '-' }}</div>
+            <div class="col-2">{{ el.warehouse?.name || '-' }}</div>
 
-            <div class="col-3">{{ el.documentDate }}</div>
-            <div class="col-3">{{ el.createdAt }}</div>
-            <div class="col-3">{{ el.updatedAt }}</div>
-            <div class="col-2">
+            <div class="col-2">{{ el.documentDate }}</div>
+            <div class="col-2">{{ el.createdAt }}</div>
+            <div class="col-2">{{ el.updatedAt }}</div>
+            <div class="col-1">
               <q-badge class="body" :color="waybillTypeNames[el.status].color">
                 {{ waybillTypeNames[el.status].label }}
               </q-badge>
@@ -39,12 +50,20 @@
       <div v-else class="subtitle-text">Элементов не найдено</div>
     </div>
   </div>
+  <LoadWaybillsModal
+    v-model="loadModal"
+    @success="waybillsSuccessfullyLoaded()"
+  />
 </template>
 <script lang="ts" setup>
+import CButton from 'src/components/templates/buttons/CButton.vue';
 import Pagination from 'src/components/templates/inputs/Pagination.vue';
 import { waybillTypeNames } from 'src/models/waybill/waybill';
 import { waybillRepo } from 'src/models/waybill/waybillRepo';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+import LoadWaybillsModal from './LoadWaybillsModal.vue';
+
+const loadModal = ref(false);
 
 const loadItems = async (page = 1, appendItems = false) => {
   await waybillRepo.list(
@@ -54,6 +73,11 @@ const loadItems = async (page = 1, appendItems = false) => {
       appendItems,
     }
   );
+};
+
+const waybillsSuccessfullyLoaded = () => {
+  loadModal.value = false;
+  void loadItems();
 };
 
 onMounted(() => {
