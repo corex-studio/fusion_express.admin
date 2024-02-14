@@ -7,7 +7,7 @@
     <div class="subtitle-text bold mb-10">Загрузка накладных</div>
     <div class="column full-width gap-10">
       <CInput default :model-value="dateFrom" external-label="Дата от">
-        <q-menu auto-close>
+        <q-menu>
           <q-date
             :locale="locale"
             v-model="dateFrom"
@@ -16,7 +16,7 @@
         </q-menu>
       </CInput>
       <CInput default :model-value="dateTo" external-label="Дата до">
-        <q-menu auto-close>
+        <q-menu>
           <q-date
             :locale="locale"
             v-model="dateTo"
@@ -110,12 +110,8 @@ const process = async () => {
   try {
     loading.value = true;
     await waybillRepo.process({
-      date_from: moment(dateFrom.value, 'DD.MM.YYYY')
-        .utc()
-        .format('YYYY-MM-DD HH:mm:ss'),
-      date_to: moment(dateTo.value, 'DD.MM.YYYY')
-        .utc()
-        .format('YYYY-MM-DD HH:mm:ss'),
+      date_from: moment(dateFrom.value, 'DD.MM.YYYY').format('YYYY-MM-DD'),
+      date_to: moment(dateTo.value, 'DD.MM.YYYY').format('YYYY-MM-DD'),
     });
     Notify.create({
       message: 'Накладные успешно загружены',
