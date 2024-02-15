@@ -8,6 +8,26 @@
         width="180px"
       />
     </div>
+    <div class="bordered-block column gap-3 pa-5 mt-10">
+      <div class="row gap-4">
+        <q-icon name="fa-light fa-info-circle" size="18px" />
+        <div class="bold">Список обработанных накладных из iiko</div>
+      </div>
+      <div>
+        <span class="bold"> Статусы: </span>
+        <div class="pl-2">
+          <li>Создана - Накладная загружена и не обработана</li>
+          <li>
+            Обработана - Накладная загружена и успешно обработана( поле
+            счет-фактура было изменено)
+          </li>
+          <li>
+            Ошибка - Во время обработки накладной возникла одна или несколько
+            ошибок
+          </li>
+        </div>
+      </div>
+    </div>
     <div class="column full-width mt-13">
       <template v-if="$waybill.items.length">
         <div
@@ -31,10 +51,21 @@
             <div class="col-2">{{ el.documentDate }}</div>
             <div class="col-2">{{ el.createdAt }}</div>
             <div class="col-2">{{ el.updatedAt }}</div>
-            <div class="col-1">
+            <div class="col-1 row no-wrap items-center gap-4">
               <q-badge class="body" :color="waybillTypeNames[el.status].color">
                 {{ waybillTypeNames[el.status].label }}
               </q-badge>
+
+              <q-icon
+                v-if="el.status === WaybillType.FAILED"
+                class="cursor-pointer"
+                size="18px"
+                name="fa-light fa-info-circle"
+              >
+                <q-tooltip>
+                  {{ el.error?.error_message }}
+                </q-tooltip>
+              </q-icon>
             </div>
           </div>
         </template>
@@ -58,7 +89,7 @@
 <script lang="ts" setup>
 import CButton from 'src/components/templates/buttons/CButton.vue';
 import Pagination from 'src/components/templates/inputs/Pagination.vue';
-import { waybillTypeNames } from 'src/models/waybill/waybill';
+import { WaybillType, waybillTypeNames } from 'src/models/waybill/waybill';
 import { waybillRepo } from 'src/models/waybill/waybillRepo';
 import { onMounted, ref } from 'vue';
 import LoadWaybillsModal from './LoadWaybillsModal.vue';
@@ -90,5 +121,12 @@ onMounted(() => {
   background-color: #c4c4c421;
   outline: 1px $primary solid;
   transition: 0.35s;
+}
+
+.bordered-block {
+  border-radius: 12px;
+  border: 1px $secondary1 solid;
+  max-width: 650px;
+  width: 100%;
 }
 </style>

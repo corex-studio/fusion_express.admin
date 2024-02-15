@@ -2,11 +2,27 @@
   <div>
     <div class="full-width row justify-between">
       <div class="big-header bold">Концепции</div>
+
       <CButton
         @click="loadConceptions()"
         :loading="loading"
         label="Загрузить концепции"
       />
+    </div>
+    <div class="bordered-block column gap-3 pa-5 mt-10">
+      <div class="row gap-4">
+        <q-icon name="fa-light fa-info-circle" size="18px" />
+        <div class="bold">Список концепций, загруженных из iiko</div>
+      </div>
+      <div>
+        <span class="bold">Статус</span> - отображает заполнение концепции
+        юридическими данным
+      </div>
+
+      <div>
+        <span class="bold">Активность</span> - отвечает за включение и
+        отключение в выгрузку накладных с данной концпецией
+      </div>
     </div>
     <div class="column full-width mt-13">
       <template v-if="$conception.items.length">
@@ -135,5 +151,12 @@ onMounted(() => {
   background-color: #c4c4c421;
   outline: 1px $primary solid;
   transition: 0.35s;
+}
+
+.bordered-block {
+  border-radius: 12px;
+  border: 1px $secondary1 solid;
+  max-width: 650px;
+  width: 100%;
 }
 </style>

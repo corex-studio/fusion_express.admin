@@ -77,6 +77,9 @@ export type WaybillRaw = {
   conception?: ConceptionRaw | null;
   created_at?: string | null;
   updated_at?: string | null;
+  error?: {
+    error_message: string | null;
+  } | null;
 };
 
 export class Waybill implements BaseModel {
@@ -88,6 +91,9 @@ export class Waybill implements BaseModel {
   conception: Conception | null;
   createdAt: string | null;
   updatedAt: string | null;
+  error: {
+    error_message: string | null;
+  } | null;
   constructor(raw: WaybillRaw) {
     this.id = raw.uuid || undefined;
     this.number = raw.number || null;
@@ -103,6 +109,7 @@ export class Waybill implements BaseModel {
     this.updatedAt = raw.updated_at
       ? moment.utc(raw.updated_at).local().format('DD.MM.YYYY HH:mm')
       : null;
+    this.error = raw.error || null;
   }
 
   toJson(): Record<string, any> {

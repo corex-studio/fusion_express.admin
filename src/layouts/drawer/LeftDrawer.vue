@@ -21,7 +21,7 @@
           style="transition: 0.3s"
           :key="index"
           :class="el.selected ? 'text-accent' : 'text-white'"
-          class="subtitle-text cursor-pointer row items-baseline gap-10 full-width pl-12 relative-position tab-row"
+          class="subtitle-text cursor-pointer row no-wrap items-baseline gap-10 full-width pl-12 relative-position tab-row"
         >
           <transition name="fade">
             <div v-if="el.selected" class="selection-mark"></div>
